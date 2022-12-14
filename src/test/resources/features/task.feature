@@ -37,4 +37,6 @@
         And User should input information and click Add Experience button
         Then User should see Overview module
 
+    #mvn verify -Dcucumber.options="--tags @smoke"
+  #mvn verify -Dbrowser=firefox
 
