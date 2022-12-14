@@ -1,4 +1,5 @@
 package com.krafttech.pages;
+
 import com.krafttech.utilities.BrowserUtils;
 import com.krafttech.utilities.Driver;
 import org.openqa.selenium.By;
@@ -6,59 +7,56 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public abstract class BasePage {
+public  abstract class BasePage {
 
-    // buradan abstract class olduğu için nesne oluşturamayız.
-    // extend ederek diğer classlarda kullanabiliriz
+    // Bu page diger pageler icin ortak oldugundan buradan
+    // diger pagelerde oldugu gibi obje olusturup kullanilmamasi gerekiyor.
+    // Bunun icin de abstract yapiyorus
+    // Ancak diger pages extends yaparak bu classa ait metodlari locatorlari kullanabilir
+
     WebDriver driver;
 
     public BasePage(){
-        PageFactory.initElements(Driver.get(),this);
+                PageFactory.initElements(Driver.get(),this);
     }
 
 
-    public void navigateToModule(String tab, String module){
+    public void navigateToModule(String tab, String module) {
 
-        String tabLocator= "//li[@class='nav-item']//span[.='"+tab+"']";  ////li[@class='nav-item']//span[.='Components']
-
+        driver=Driver.get();
+        String tabLocator="//span[.='"+tab+"']";
         String moduleLocator="//span[.='"+module+"']";
 
-        driver = Driver.get();
+            BrowserUtils.waitForClickablility(By.xpath(tabLocator), 5);
+            WebElement tabElement = driver.findElement(By.xpath(tabLocator));
+      tabElement.click();
+        //    new Actions(Driver.get()).moveToElement(tabElement).pause(200).doubleClick(tabElement).build().perform();
 
-        BrowserUtils.waitForClickablility(By.xpath(tabLocator),5);
-        WebElement tabElement=driver.findElement(By.xpath(tabLocator));
-        tabElement.click();
-
-
-        BrowserUtils.waitForClickablility(By.xpath(moduleLocator),5);
-        driver.findElement(By.xpath(moduleLocator)).click();
-
-
-
-    }
+            BrowserUtils.waitForClickablility(By.xpath(moduleLocator), 5);
+           driver.findElement(By.xpath(moduleLocator)).click();
+            BrowserUtils.waitForVisibility(By.xpath(moduleLocator), 5);
+            BrowserUtils.scrollToElement(driver.findElement(By.xpath(moduleLocator)));
 
 
-    public String  subTitle(String subTitle){
+        }
 
-        String subTitleLocator="//h1[.='"+subTitle+"']";
+    public String subTitle(String subTitle ){
+
+        String subTitleLocator= "//h1[.='"+subTitle+"'] ";
+
         BrowserUtils.waitForPresenceOfElement(By.xpath(subTitleLocator),5);
+        WebElement SubTitle= Driver.get().findElement(By.xpath(subTitleLocator));
+      //  System.out.println("SubTitle.getText() = " + SubTitle.getText());
 
-        WebElement Subtitle=Driver.get().findElement(By.xpath(subTitleLocator));
+        String actualsubTitle=SubTitle.getText();
 
-        String actualSubtitle= Subtitle.getText();
-
-        return actualSubtitle;
-
-
-    }
-
-    public void name(){
-        int yaş=35;
-        String name="Ahmet Koçak "+yaş+" yaşındadır";
-        System.out.println("name = " + name);
-
-
+        return actualsubTitle;
     }
 
 
+    public void naviagateToTab(String tabName){
+        driver=Driver.get();
+        driver.findElement(By.xpath("//nav//span[.='"+tabName+"']")).click();
+
+    }
 }

@@ -1,16 +1,22 @@
 package com.krafttech.pages;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-import com.krafttechnologie.Utilities.BrowserUtils;
-import com.krafttechnologie.Utilities.Driver;
+
+import com.krafttech.utilities.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class MyProfilePages extends BasePage {
+import java.util.List;
+
+public class ProfilePage extends BasePage {
+
     WebDriver driver;
+
+    public ProfilePage() {
+        PageFactory.initElements(Driver.get(), this);
+    }
 
     @FindBy(xpath = "//button[.='Edit Profile'] ")
     public WebElement editBtn;
@@ -44,11 +50,10 @@ public class MyProfilePages extends BasePage {
     public WebElement save;
 
 
-    @FindBy (xpath = "//div[@class='alert alert-success bg-success text-light border-0 alert-dismissible fade show']")
-    public WebElement profileUpdate;
+    @FindBy(xpath = "//div[@class='alert alert-success bg-success text-light border-0 alert-dismissible fade show']")
+    public WebElement profileUpdatemsg;
 
-    @FindBy (xpath = "(//span[.='My Profile'])[2]")
-    public WebElement myProfileButton;
+    //Add Experience
 
     @FindBy(xpath = "//input[@placeholder='Job Title *']")
     public WebElement jobTitle;
@@ -71,24 +76,32 @@ public class MyProfilePages extends BasePage {
     @FindBy(xpath = "//button[@value='experience']")
     public WebElement addExperienceBtn;
 
-    @FindBy(xpath = "//input[@value='qaoguzbeyt@gmail.com']")
-    public WebElement email;
-
-    @FindBy(xpath = "//input[@id='email']")
-    public WebElement profilEmail_loc;
+    @FindBy(xpath = "(//span[.='My Profile'])[2]")
+    public WebElement myProfileBtn;
 
 
+    @FindBy(xpath = "//a[@class='nav-link collapsed']")
+    public List<WebElement>profileOptions;
+
+    @FindBy(xpath = "//li[contains(@class,'nav-item dropdown')]")
+    public List<WebElement>profileOptionsandUsername;
+
+    @FindBy(xpath="//h5[.='Profile Details']")
+    public WebElement profileDetails;
 
 
-    public void navigateToModule(String module){
-        driver=Driver.get();
+    public void profileTabs(String tabName) {
 
-        String moduleLocator="//button[.='"+module+"']";
+        driver = Driver.get();
+        String tabLocator = "//button[.='" + tabName + "'] ";
 
-        BrowserUtils.waitForClickablility(By.xpath(moduleLocator),5);
-        WebElement moduleElement=Driver.get().findElement(By.xpath(moduleLocator));
-        moduleElement.click();
-
+        //  BrowserUtils.waitForClickablility(By.xpath(tabLocator), 5);
+        WebElement tabElement = driver.findElement(By.xpath(tabLocator));
+        tabElement.click();
 
     }
+
+
+
+
 }
