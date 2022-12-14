@@ -10,6 +10,7 @@ Feature: Account Type
     When User should input "morganfreeman@kraft.com" and "mfreeman"
     Then User name should be "Morgan Freeman"
 
+    @wip
   Scenario: Third user
     Given User should be on the login page
     When User should input "eddiem@kraft.com" and "eddiem12"
