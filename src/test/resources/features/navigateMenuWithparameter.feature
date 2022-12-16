@@ -17,7 +17,7 @@ Feature: Navigate to menu with parameter
     When The user navigates to "Developers" menu
     Then The user should be able to see home name as "Developers"
 
-  @wip
+
 
   Scenario: Morgan Freeman navigates to Dashboard menu
     Given User should be on the login page
@@ -27,7 +27,7 @@ Feature: Navigate to menu with parameter
     Then The user should be able to see home name as "Dashboard"
 
 
-
+  @wip
   Scenario Outline: User
     Given User should be on the login page
     When User should input "<userEmail>" and "<password>"
